@@ -55,12 +55,27 @@ class market:
 
 market = market()
 #print(market.data.head(20))
-outcomes = []
-for i in range(20):
-    rand_year = rd.randrange(2002, 2018)
-    rand_month = rd.randrange(1, 13)
-    buy_details = market.buy_contract("QQQ", rand_year, rand_month)
-    profit_percent = market.profit_percent(buy_details)
-    outcomes.append(profit_percent)
+initial_capital = 10000
+position_percent = 0.2
+position = initial_capital * position_percent
+years = 5
+num_positions = years * 4
+end_totals = []
+for i in range(50):
+    percent_outcomes = []
+    net_outcomes = []
+    for i in range(20):
+        rand_year = rd.randrange(2002, 2018)
+        rand_month = rd.randrange(1, 13)
+        buy_details = market.buy_contract("QQQ", rand_year, rand_month)
+        profit_percent = market.profit_percent(buy_details)
+        net_profit = position * (profit_percent/float(100))
+        percent_outcomes.append(profit_percent)
+        net_outcomes.append(net_profit)
 
-print(outcomes)
+    total_end_capital = np.sum(net_outcomes)
+    end_totals.append(((total_end_capital-initial_capital)/float(initial_capital))*100)
+
+profit_percent = float("{0:.2f}".format(np.mean(end_totals)))
+print("After 20 positions over 5 years, profit %: " + str(profit_percent) + "%")
+print("Annualized gains %: " + "{0:.2f}".format(profit_percent/float(5)) + "%")
