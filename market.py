@@ -21,21 +21,22 @@ class market:
         options_details = ticker + "@" + exp_date + "@" + "{0:.2f}".format(strike_price) + "@" + "{0:.2f}".format(contract_cost)
         return options_details
 
-    def profit(self, opt_details):
+    def profit_percent(self, opt_details):
         print(opt_details)
         ticker, exp_date, strike_price, contract_cost = opt_details.split("@")
+        year, month = exp_date.split("-")
         strike_price = float(strike_price)
         contract_cost = float(contract_cost)
-        year, month = exp_date.split("-")
         year = int(year)
         month = int(month)
         row = self.data[(self.data['Year'] == year) & (self.data['Month'] == month)]
         print(row)
 
-        print(row[ticker + "_price"])
-        print(strike_price)
-        change_in_price = row[ticker + "_price"] - strike_price
-        print(change_in_price)
+        current_price = row[ticker + "_price"].values[0]
+        current_value = current_price - strike_price
+        print(current_value)
+        print(contract_cost)
+        print(((current_value/float(contract_cost))*100)-100)
 
     def buy_contract(self, ticker, year, month):
         row = self.data[(self.data['Year'] == year) & (self.data['Month'] == month)]
@@ -55,7 +56,7 @@ class market:
 
 market = market()
 #print(market.data.head(20))
-rand_year = rd.randrange(2002, 2020)
+rand_year = rd.randrange(2002, 2019)
 rand_month = rd.randrange(1, 13)
 buy_details = market.buy_contract("QQQ", rand_year, rand_month)
-market.profit(buy_details)
+market.profit_percent(buy_details)
