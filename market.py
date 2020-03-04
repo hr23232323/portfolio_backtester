@@ -16,7 +16,7 @@ class market:
         strike_price = (0.75 * current_price) - rd.random()
         price_difference = current_price - strike_price
         premium = (rd.random()/float(10)) * current_price
-        contract_cost = ((1/price_difference)*premium) + price_difference
+        contract_cost = ((1/price_difference)*premium) + premium + price_difference
 
         options_details = ticker + "@" + exp_date + "@" + "{0:.2f}".format(strike_price) + "@" + "{0:.2f}".format(contract_cost)
         return options_details
@@ -30,6 +30,7 @@ class market:
         year = int(year)
         month = int(month)
         row = self.data[(self.data['Year'] == year) & (self.data['Month'] == month)]
+        #print("SELL:")
         #print(row)
 
         current_price = row[ticker + "_price"].values[0]
@@ -40,6 +41,7 @@ class market:
     def buy_contract(self, ticker, year, month):
         row = self.data[(self.data['Year'] == year) & (self.data['Month'] == month)]
         opt_details = row[ticker + "_forward_call_details"].values[0]
+        #print("BUY:")
         #print(row)
         return(opt_details)
 
@@ -61,21 +63,27 @@ position = initial_capital * position_percent
 years = 5
 num_positions = years * 4
 end_totals = []
-for i in range(50):
+for i in range(years):
     percent_outcomes = []
     net_outcomes = []
-    for i in range(20):
+    position_total = 0
+    for i in range(num_positions):
+        position_total +=position
         rand_year = rd.randrange(2002, 2018)
         rand_month = rd.randrange(1, 13)
         buy_details = market.buy_contract("QQQ", rand_year, rand_month)
         profit_percent = market.profit_percent(buy_details)
-        net_profit = position * (profit_percent/float(100))
+        #print(profit_percent)
+        net_profit = position + (position * (profit_percent/float(100)))
+        #print(position, net_profit)
         percent_outcomes.append(profit_percent)
         net_outcomes.append(net_profit)
-    
+
     total_end_capital = np.sum(net_outcomes)
-    end_totals.append(((total_end_capital-initial_capital)/float(initial_capital))*100)
+    print(position_total)
+    print(total_end_capital)
+    end_totals.append(((total_end_capital-position_total)/float(position_total))*100)
 
 profit_percent = float("{0:.2f}".format(np.mean(end_totals)))
-print("After 20 positions over 5 years, profit %: " + str(profit_percent) + "%")
+print("After " + str(num_positions) + " positions over "+ str(years) +" years, profit %: " + str(profit_percent) + "%")
 print("Annualized gains %: " + "{0:.2f}".format(profit_percent/float(5)) + "%")
