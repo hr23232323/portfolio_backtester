@@ -15,8 +15,8 @@ class market:
         current_price = row[ticker + "_price"]
         strike_price = (0.75 * current_price) - rd.random()
         price_difference = current_price - strike_price
-        premium = (rd.random()/float(20)) * current_price
-        contract_cost = premium + price_difference
+        premium = (rd.random()/float(10)) * current_price
+        contract_cost = ((1/price_difference)*premium) + price_difference
 
         options_details = ticker + "@" + exp_date + "@" + "{0:.2f}".format(strike_price) + "@" + "{0:.2f}".format(contract_cost)
         return options_details
@@ -54,7 +54,7 @@ class market:
 
 
 market = market()
-#print(market.data.head(20))
+print(market.data.head(20))
 initial_capital = 10000
 position_percent = 0.2
 position = initial_capital * position_percent
@@ -72,7 +72,7 @@ for i in range(50):
         net_profit = position * (profit_percent/float(100))
         percent_outcomes.append(profit_percent)
         net_outcomes.append(net_profit)
-
+    
     total_end_capital = np.sum(net_outcomes)
     end_totals.append(((total_end_capital-initial_capital)/float(initial_capital))*100)
 
