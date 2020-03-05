@@ -22,7 +22,7 @@ class market:
         return options_details
 
     def profit_percent(self, opt_details):
-        #print(opt_details)
+        print(opt_details)
         ticker, exp_date, strike_price, contract_cost = opt_details.split("@")
         year, month = exp_date.split("-")
         strike_price = float(strike_price)
@@ -31,7 +31,7 @@ class market:
         month = int(month)
         row = self.data[(self.data['Year'] == year) & (self.data['Month'] == month)]
         #print("SELL:")
-        #print(row)
+        print(row)
 
         current_price = row[ticker + "_price"].values[0]
         current_value = current_price - strike_price
@@ -57,7 +57,7 @@ class market:
 
 market = market()
 print(market.data.head(20))
-initial_capital = 10000
+initial_capital = 100000
 position_percent = 0.2
 position = initial_capital * position_percent
 years = 5
@@ -75,7 +75,7 @@ for i in range(years):
         profit_percent = market.profit_percent(buy_details)
         #print(profit_percent)
         net_profit = position + (position * (profit_percent/float(100)))
-        #print(position, net_profit)
+        print(position, net_profit)
         percent_outcomes.append(profit_percent)
         net_outcomes.append(net_profit)
 
