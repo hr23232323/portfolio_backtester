@@ -31,7 +31,7 @@ class market:
         month = int(month)
         row = self.data[(self.data['Year'] == year) & (self.data['Month'] == month)]
         #print("SELL:")
-        print(row)
+        #print(row)
 
         current_price = row[ticker + "_price"].values[0]
         current_value = current_price - strike_price
@@ -44,7 +44,22 @@ class market:
         #print("BUY:")
         #print(row)
         return(opt_details)
-        
+
+    def sell_contract(self, opt_details):
+        ticker, exp_date, strike_price, contract_cost = opt_details.split("@")
+        year, month = exp_date.split("-")
+        strike_price = float(strike_price)
+        contract_cost = float(contract_cost)
+        year = int(year)
+        month = int(month)
+        row = self.data[(self.data['Year'] == year) & (self.data['Month'] == month)]
+        #print("SELL:")
+        #print(row)
+
+        current_price = row[ticker + "_price"].values[0]
+        current_value = current_price - strike_price
+        return current_value
+
 
     def __init__(self):
         historic_data = pd.read_csv("historic_data.csv")
