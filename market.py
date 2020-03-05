@@ -4,6 +4,11 @@ import random as rd
 
 ## Python file to represent the market. This module loads the historic data and gives access to the other project files
 class market:
+    def __init__(self):
+        historic_data = pd.read_csv("historic_data.csv")
+        historic_data["QQQ_forward_call_details"] = historic_data.apply(lambda row: self.forward_price_option(row, "QQQ"), axis=1)
+        historic_data["VTI_forward_call_details"] = historic_data.apply(lambda row: self.forward_price_option(row, "VTI"), axis=1)
+        self.data =historic_data
 
     # method to create forward historic options prices. Includes some degree of randomness
     # to mimic real world and showcase different scenarios
@@ -38,14 +43,14 @@ class market:
         outcome_percent = float("{0:.2f}".format(((current_value/float(contract_cost))*100)-100))
         return (outcome_percent)
 
-    def buy_contract(self, ticker, year, month):
+    def buy_contract(self, ticker, year, month, position_size=2000):
         row = self.data[(self.data['Year'] == year) & (self.data['Month'] == month)]
         opt_details = row[ticker + "_forward_call_details"].values[0]
         #print("BUY:")
         #print(row)
         return(opt_details)
 
-    def sell_contract(self, opt_details):
+    def sell_contract(self, opt_details, position_size=2000):
         ticker, exp_date, strike_price, contract_cost = opt_details.split("@")
         year, month = exp_date.split("-")
         strike_price = float(strike_price)
@@ -58,11 +63,5 @@ class market:
 
         current_price = row[ticker + "_price"].values[0]
         current_value = current_price - strike_price
-        return current_value
-
-
-    def __init__(self):
-        historic_data = pd.read_csv("historic_data.csv")
-        historic_data["QQQ_forward_call_details"] = historic_data.apply(lambda row: self.forward_price_option(row, "QQQ"), axis=1)
-        historic_data["VTI_forward_call_details"] = historic_data.apply(lambda row: self.forward_price_option(row, "VTI"), axis=1)
-        self.data =historic_data
+        position_return = position_size * (current_value/float(contract_cost))
+        return position_return
