@@ -90,3 +90,12 @@ class market:
         #print((current_value/float(contract_cost)))
         position_return = position_size * (current_value/float(contract_cost))
         return position_return
+
+    def buy_stock(self, ticker, year, month, position_size=2000):
+        row = self.data[(self.data['Year'] == year) & (self.data['Month'] == month)]
+        stock_price = row[ticker + "_price"].values[0]
+        #print("BUY:")
+        #print(row)
+        return(stock_price)
+
+    
