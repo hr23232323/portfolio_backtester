@@ -10,7 +10,7 @@ def main():
     years = 5
     num_positions = 4
     ticker = "QQQ"
-    num_exp = 100
+    num_exp = 300
     exp_results = []
     for e in range(num_exp):
         trader_1 = trader(trading_capital, position_capital)
@@ -27,7 +27,7 @@ def main():
     worst_result = np.min(exp_results)
     mean_profit_percent = float("{0:.2f}".format(mean_result))
     worst_profit_percent = float("{0:.2f}".format(worst_result))
-    print("After " + str(num_positions*years) + " positions, mean profit %: " + str(mean_profit_percent) + "%")
-    print("After " + str(num_positions*years) + " positions, worst profit %: " + str(worst_profit_percent) + "%")
+    print("Over " + str(num_exp)+ " trials, after " + str(num_positions*years) + " positions, mean profit %: " + str(mean_profit_percent) + "%")
+    print("Over " + str(num_exp)+ " trials, after " + str(num_positions*years) + " positions, worst profit %: " + str(worst_profit_percent) + "%")
 if __name__ == "__main__":
     main()
