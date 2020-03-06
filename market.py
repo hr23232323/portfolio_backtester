@@ -108,4 +108,6 @@ class market:
         current_price = row[ticker + "_price"].values[0]
         change_in_price = current_price - cost_price
 
-        position_return = 
+        position_return = position_szie * (current_price/float(cost_price))
+
+        return position_return
