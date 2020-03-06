@@ -7,13 +7,17 @@ def main():
     position_size = 0.2
     position_capital = trading_capital*position_size
     trader_1 = trader(trading_capital, position_capital)
-    num_positions = 10
+    years = 5
+    num_positions = 4
     ticker = "QQQ"
-    for i in range(num_positions):
-        trader_1.open_rand_position(trade_market, ticker)
+    for i in range(years):
+        for j in range(num_positions):
+            trader_1.open_rand_position(trade_market, ticker)
         #trader_1.print_status()
-        trader_1.close_position(trade_market)
-        trader_1.print_status()
+        for j in range(num_positions):
+
+            trader_1.close_position(trade_market)
+        #trader_1.print_status()
 
     profit_percent = float("{0:.2f}".format(((trader_1.money-trading_capital)/float(10000))*100))
     print("After " + str(num_positions) + " positions, profit %: " + str(profit_percent) + "%")

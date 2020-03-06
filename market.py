@@ -50,6 +50,14 @@ class market:
         #print(row)
         return(opt_details)
 
+    def calc_option_price(current_price, strike_price):
+        price_diff = current_price - strike_price
+        if(price_diff < (-1*0.1*strike_price)):
+            premium_coef = 1
+        #elif(price_diff)
+
+        return current_price - strike_price
+
     def sell_contract(self, opt_details, position_size=2000):
         ticker, exp_date, strike_price, contract_cost = opt_details.split("@")
         year, month = exp_date.split("-")
@@ -62,6 +70,9 @@ class market:
         #print(row)
 
         current_price = row[ticker + "_price"].values[0]
-        current_value = current_price - strike_price
+        current_value = self.calc_option_price(current_price, strike_price)
+        #print(str(current_price) + " , " + str(strike_price))
+        #print(current_value)
+        #print((current_value/float(contract_cost)))
         position_return = position_size * (current_value/float(contract_cost))
         return position_return
