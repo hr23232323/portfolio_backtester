@@ -50,13 +50,26 @@ class market:
         #print(row)
         return(opt_details)
 
-    def calc_option_price(current_price, strike_price):
+    def calc_option_price(self, current_price, strike_price):
         price_diff = current_price - strike_price
-        if(price_diff < (-1*0.1*strike_price)):
-            premium_coef = 1
-        #elif(price_diff)
+        if(price_diff < 0):
+            # out of the money
+            if(abs(price_diff) < (0.2 * current_price)):
+                # close OTM; high premium
+                premium = 0.25*current_price
+            else:
+                # Far OTM; low premium
+                premium = 0.1*current_price
+        else:
+            # in the money
+            if(abs(price_diff) < (0.2 * current_price)):
+                # close ITM; high premium
+                premium = 0.15*current_price
+            else:
+                # Far ITM; low premium
+                premium = 0.05*current_price
 
-        return current_price - strike_price
+        return price_diff
 
     def sell_contract(self, opt_details, position_size=2000):
         ticker, exp_date, strike_price, contract_cost = opt_details.split("@")
