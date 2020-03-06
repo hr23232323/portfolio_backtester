@@ -24,7 +24,7 @@ class trader:
         else:
             contract_to_sell = self.curr_positions.pop(0)
             trade_result = market.sell_contract(contract_to_sell)
-            print(trade_result)
+            #print(trade_result)
             self.money += trade_result
 
     def print_status(self):

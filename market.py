@@ -69,7 +69,8 @@ class market:
                 # Far ITM; low premium
                 premium = 0.05*current_price
 
-        return price_diff
+        contract_price= price_diff+premium
+        return contract_price
 
     def sell_contract(self, opt_details, position_size=2000):
         ticker, exp_date, strike_price, contract_cost = opt_details.split("@")
