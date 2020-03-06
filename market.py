@@ -98,4 +98,14 @@ class market:
         #print(row)
         return(stock_price)
 
-    
+    def sell_stock(self, opt_details, cost_price, position_size=2000):
+        ticker, exp_date, strike_price, contract_cost = opt_details.split("@")
+        year, month = exp_date.split("-")
+        year = int(year)
+        month = int(month)
+        row = self.data[(self.data['Year'] == year) & (self.data['Month'] == month)]
+
+        current_price = row[ticker + "_price"].values[0]
+        change_in_price = current_price - cost_price
+
+        position_return = 
