@@ -10,7 +10,7 @@ def main():
     years = 5
     num_positions = 4
     ticker = "QQQ"
-    num_exp = 300
+    num_exp = 200
     exp_results = []
     for e in range(num_exp):
         trader_1 = trader(trading_capital, position_capital)
