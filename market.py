@@ -105,10 +105,14 @@ class market:
         month = int(month)
         cost_price = float(cost_price)
         row = self.data[(self.data['Year'] == year) & (self.data['Month'] == month)]
-
+        #print("SELL:")
+        #print(row)
         current_price = row[ticker + "_price"].values[0]
         change_in_price = current_price - cost_price
+        #print(cost_price)
+        #print(change_in_price)
 
         position_return = position_size * (current_price/float(cost_price))
 
+        #print(position_return)
         return position_return
