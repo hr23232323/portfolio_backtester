@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import random as rd
 
-class trader:
+class opt_trader:
     def __init__(self, money, position_size):
         self.money = money
         self.position_size = position_size

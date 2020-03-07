@@ -1,5 +1,5 @@
 from market import market
-from trader import trader
+from stock_trader import stock_trader
 import numpy as np
 
 def main():
@@ -10,10 +10,10 @@ def main():
     years = 5
     num_positions = 4
     ticker = "QQQ"
-    num_exp = 200
+    num_exp = 100
     exp_results = []
     for e in range(num_exp):
-        trader_1 = trader(trading_capital, position_capital)
+        trader_1 = stock_trader(trading_capital, position_capital)
         for i in range(years):
             for j in range(num_positions):
                 trader_1.open_rand_position(trade_market, ticker)
