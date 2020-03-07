@@ -28,20 +28,19 @@ def main():
             #trader_1.print_status()
         exp_results_1.append(((trader_1.money-trading_capital)/float(trading_capital))*100)
         exp_results_2.append(((trader_2.money-trading_capital)/float(trading_capital))*100)
+    print_result(exp_results_1, num_exp, num_positions, years, "option")
+    print_result(exp_results_2, num_exp, num_positions, years, "stock")
 
-def print_result(exp_results, trader_type):
-    mean_result_1 = np.mean(exp_results_1)
-    worst_result_1 = np.min(exp_results_1)
-    mean_result_2 = np.mean(exp_results_2)
-    worst_result_2 = np.min(exp_results_2)
-    mean_profit_percent_1 = float("{0:.2f}".format(mean_result_1))
-    worst_profit_percent_1 = float("{0:.2f}".format(worst_result_1))
-    mean_profit_percent_2 = float("{0:.2f}".format(mean_result_2))
-    worst_profit_percent_2 = float("{0:.2f}".format(worst_result_2))
-    print("Over " + str(num_exp)+ " trials, after " + str(num_positions*years) + " positions, mean OPTION profit %: " + str(mean_profit_percent_1) + "%")
-    print("Over " + str(num_exp)+ " trials, after " + str(num_positions*years) + " positions, worst OPTION profit %: " + str(worst_profit_percent_1) + "%")
-    print("Over " + str(num_exp)+ " trials, after " + str(num_positions*years) + " positions, mean STOCK profit %: " + str(mean_profit_percent_2) + "%")
-    print("Over " + str(num_exp)+ " trials, after " + str(num_positions*years) + " positions, worst STOCK profit %: " + str(worst_profit_percent_2) + "%")
+def print_result(exp_results, num_exp, num_positions, years, trader_type):
+    mean_result = np.mean(exp_results)
+    worst_result = np.min(exp_results)
+    best_result = np.max(exp_results)
+    mean_profit_percent = float("{0:.2f}".format(mean_result))
+    worst_profit_percent = float("{0:.2f}".format(worst_result))
+    best_profit_percent = float("{0:.2f}".format(best_result))
+    print("Based on " + str(num_exp)+ " trials, after " + str(num_positions*years) + " positions over " + str(years*2) +" years, mean " + trader_type + " profit %: " + str(mean_profit_percent) + "%")
+    print("Based on " + str(num_exp)+ " trials, after " + str(num_positions*years) + " positions over " + str(years*2) +" years, worst " + trader_type + " profit %: " + str(worst_profit_percent) + "%")
+    print("Based on " + str(num_exp)+ " trials, after " + str(num_positions*years) + " positions over " + str(years*2) +" years, best " + trader_type + " profit %: " + str(best_profit_percent) + "%")
 
 
 
