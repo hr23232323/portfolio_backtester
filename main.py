@@ -10,7 +10,7 @@ def main():
     position_capital = trading_capital*position_size
     years = 5
     num_positions = 4
-    ticker = "QQQ"
+    ticker = "VTI"
     num_exp = 100
     exp_results_1 = []
     exp_results_2 = []
