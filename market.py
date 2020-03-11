@@ -18,9 +18,9 @@ class market:
 
         # contract pricing
         current_price = row[ticker + "_price"]
-        strike_price = (0.75  * current_price) - rd.random()
+        strike_price = (0.70  * current_price) - rd.random()
         price_difference = current_price - strike_price
-        premium = (rd.random()/float(10)) * current_price
+        premium = (rd.random()/float(8)) * current_price
         contract_cost = ((1/price_difference)*premium) + premium + price_difference
 
         options_details = ticker + "@" + exp_date + "@" + "{0:.2f}".format(strike_price) + "@" + "{0:.2f}".format(contract_cost)
